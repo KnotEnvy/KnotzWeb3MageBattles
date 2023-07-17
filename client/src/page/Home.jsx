@@ -1,19 +1,39 @@
-import React from 'react';
+import React, { useState} from 'react';
 
-// import { useGlobalContext } from '../context';
-import { PageHOC } from '../components';
+import { useGlobalContext } from '../context';
+import { PageHOC, CustomInput, CustomButton } from '../components';
 
 const Home = () => {
-  return (
-    <div>
-      <h1 className='text-white' text-xl>Hello from Home</h1>
+  const { contract, walletAddress } = useGlobalContext();
+  const [playerName, setPlayerName] = useState('');
 
+  const handleClick = async () => {
+    try {
+      await contract.isPlayer(walletAddress)
+    } catch (error) {
+      alert(error);
+    }
+  }
+
+  return (
+    <div className='flex flex-col'>
+      <CustomInput
+        label="name"
+        placeholder="Enter your battle name"
+        value={playerName}
+        handleValueChange={setPlayerName}
+      />
+      <CustomButton 
+        title="Register"
+        handleClick={handleClick}
+        restStyles="mt-6"
+      />
     </div>
   )
 };
 
 export default PageHOC(
   Home,
-  <>Welcome to Avax Gods <br /> a Web3 NFT Card Game</>,
+  <>Welcome to Knotz Battle Mages <br /> a Web3 NFT Card Game</>,
   <>Connect your wallet to start playing <br /> the ultimate Web3 Battle Card Game</>
 );
