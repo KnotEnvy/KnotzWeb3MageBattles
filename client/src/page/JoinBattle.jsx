@@ -6,6 +6,7 @@ import { CustomButton, PageHOC } from '../components'
 import styles from '../styles'
 
 const JoinBattle = () => {
+    const navigate = useNavigate();
   return (
     <>
         <h2 className={styles.joinHeadText}>Available Battles:</h2>
